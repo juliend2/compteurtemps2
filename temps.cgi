@@ -30,6 +30,8 @@ print <<EndHdr;
 <h1>Time</h1>
 <ul>
 EndHdr
+
+my %projects = ();
 my @files = </Users/juliend2/Desktop/Dropbox/perso/ressources/TEMPS/*.txt>;
 foreach my $file (@files) {
 	print '<li>';
@@ -72,13 +74,23 @@ foreach my $file (@files) {
 				$totalTime += &timeDiff( date1 => '20'.$date.' '.$debut, date2 => '20'.$date.' '.$fin );
 			}
 		}
+		my $shorttitle = lc($title);
+		$shorttitle =~ m/^([-a-z]+)/;
+		$shorttitle = $1;
+		$projects{$shorttitle} += $totalTime; # ajouter au hash le titre du projet et son temps
 		print $title. ' : ';
 		print int($totalTime / 60) . '<br/>';	
 	}
 	print '</li>';
 }
+print '<div id="projects">';
+while ((my $key, my $value) = each %projects)
+{
+  print "$key : " . int($projects{$key} / 60)." minutes or <strong>". int($projects{$key} / 60 / 60) ." hours</strong><br/>";
+}
+print '</div>';
 
-
+# pre(%projects);
 print <<EndFooter;
 </ul>
 </body>

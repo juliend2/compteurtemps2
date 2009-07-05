@@ -12,6 +12,7 @@ h2 {
 }
 ul {
 	float: left;
+	clear: both;
 	height: 160px;
 	list-style: none;
 }
@@ -23,3 +24,7 @@ ul {
 		padding: .5em;
 		background: #A1CFE9;
 	}
+pre, div#projects {
+	float: left;
+	clear: left;
+}
