@@ -89,4 +89,15 @@ sub timeDiff (%) {
 	$ssDiff; # seconds diff
 }
 
+sub formattime(%) {
+	my %args = @_;
+	my @mon = qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec);
+	printf "%s-%02d %4d", $mon[$args{'month'}], $args{'day'}, $args{'year'};
+}
+
+sub in_array {
+     my ($arr,$search_for) = @_;
+     return grep {$search_for eq $_} @$arr;
+}
+
 1; # sinon ca sort une erreur 500
