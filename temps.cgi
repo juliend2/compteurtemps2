@@ -54,14 +54,14 @@ foreach my $file (@files) {
 
 	# split the file :
 	my @blocs = ();
-	my %splittedfile = split(/(\n[-a-z_ ]+\s?:\n[-0-9h\s]+)/,$file); # get all the hour blobs
+	my %splittedfile = split(/(\n[-a-z0-9,._\(\) ]+\s?:\n[-0-9h\s]+)/,$file); # get all the hour blobs
 
 	# VIVE PERL :
 	my @blocs = grep {!/^$/} %splittedfile;
 
 	# loop into the blocks :
 	foreach my $bloc (@blocs) {
-		$bloc =~ m/([-a-z ]+)\s?:/i;
+		$bloc =~ m/([-a-z0-9,._\(\) ]+)\s?:/i;
 		my $title = $1;
 		my $totalTime = 0;
 		foreach	my $temps (split(/\n/,$bloc)) {
