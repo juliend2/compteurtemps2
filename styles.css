@@ -1,5 +1,6 @@
 body {
 	font-family: Georgia,'Times new roman', serif;
+	min-width: 800px;
 }
 h1 {
 	font-size: 1.8em;
@@ -11,9 +12,10 @@ h2 {
 	color: #295F54;
 }
 ul {
-	float: left;
+	float: right;
 	clear: both;
 	height: 160px;
+	width: 400px;
 	list-style: none;
 }
 	li {
@@ -26,5 +28,6 @@ ul {
 	}
 pre, div#projects {
 	float: left;
-	clear: left;
+	width: 375px;
+/*	clear: left;*/
 }

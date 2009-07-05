@@ -27,7 +27,7 @@ print <<EndHdr;
 </style>
 </head>
 <body>
-<h1>Time</h1>
+<h1>Time spent by projects</h1>
 <ul>
 EndHdr
 
@@ -71,7 +71,9 @@ foreach my $file (@files) {
 				my $fin   = $2;
 				$debut =~ s/h/:/; 
 				$fin   =~ s/h/:/;
-				$totalTime += &timeDiff( date1 => '20'.$date.' '.$debut, date2 => '20'.$date.' '.$fin );
+				if (int($debut) <= int($fin)) {
+					$totalTime += &timeDiff( date1 => '20'.$date.' '.$debut, date2 => '20'.$date.' '.$fin );
+				}
 			}
 		}
 		my $shorttitle = lc($title);
@@ -83,6 +85,8 @@ foreach my $file (@files) {
 	}
 	print '</li>';
 }
+print '</ul>';
+
 print '<div id="projects">';
 while ((my $key, my $value) = each %projects)
 {
@@ -92,7 +96,24 @@ print '</div>';
 
 # pre(%projects);
 print <<EndFooter;
-</ul>
 </body>
 </html>
 EndFooter
+
+# FORMAT DU TEMPS DANS LES FICHIERS QU'ON PARSE :
+# Autoprevention (debug utf-8 excel) :
+# 	9h55 - 10h20
+# 	18h20 - 18h30
+# 
+# louis (demenager serveur) :
+# 	11h10 - 11h30
+# 
+# VendreQuebec (design) :
+# 	12h10 - 12h30
+# 	14h15 - 15h00
+# 	15h30 - 15h40
+# 	15h45 - 15h50
+# 
+# louis (demenager serveur) :
+# 	16h35 - 16h45
+# 	16h50 - 17h10
