@@ -1,0 +1,25 @@
+body {
+	font-family: Georgia,'Times new roman', serif;
+}
+h1 {
+	font-size: 1.8em;
+	font-weight: normal;
+}
+h2 {
+	font-size: 1.4em;
+	font-weight: normal;
+	color: #295F54;
+}
+ul {
+	float: left;
+	height: 160px;
+	list-style: none;
+}
+	li {
+		float: left;
+		height: 160px;
+		width: 160px;
+		margin: .5em;
+		padding: .5em;
+		background: #A1CFE9;
+	}

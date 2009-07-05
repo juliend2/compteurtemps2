@@ -15,7 +15,16 @@ print "Content-type:text/html\n\n";
 print <<EndHdr;
 <html>
 <head><title>URL List</title>
-<link rel="stylesheet" href="http://192.168.1.100:8888/temps/styles.css" type="text/css" media="screen" title="no title" charset="utf-8"/>
+<style>
+EndHdr
+# hack to include a css into a perl file :
+my $filename = './styles.css';
+undef $/;
+open (FILE,"< $filename") or die "Can't open $filename : $!";
+print <FILE>;
+close(FILE);
+print <<EndHdr;
+</style>
 </head>
 <body>
 <h1>Time</h1>
