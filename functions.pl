@@ -84,7 +84,9 @@ sub timeDiff (%) {
 	my $mm     = int($ssDiff /    60) - $dd *  1440 - $hh *   60;
 	my $ss     = int($ssDiff /     1) - $dd * 86400 - $hh * 3600 - $mm * 60;
 
-	"$dd Tage $hh Std. $mm Min.";
+	# "$dd Days $hh Hours. $mm Mins."; # returned string
+	# "$hh Hours. $mm Mins."; # returned string
+	$ssDiff; # seconds diff
 }
 
 1; # sinon ca sort une erreur 500

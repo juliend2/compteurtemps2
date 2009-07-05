@@ -1,48 +1,63 @@
 #!/usr/bin/perl
+use strict;
 use warnings;
-# use lib './lib';
-
 use CGI::Carp qw(fatalsToBrowser); # afficher les erreurs
+use Data::Dumper;
+use Time::Simple;
+use Time::Piece;
+use Time::Simple::Range;
 
+# require 'local::lib';
 
-
-require "./functions.pl";
+require "./functions.pl"; # fonctions diverses
 
 print "Content-type:text/html\n\n";
 print <<EndHdr;
 <html><head><title>URL List</title></head>
 <body>
-<h2>Time</h2>
+<h1>Time</h1>
 <ul>
 EndHdr
-# get the file :
-$filename = '/Users/juliend2/Desktop/Dropbox/perso/ressources/TEMPS/09-06-18.txt';
-undef $/;
-open (FILE,"< $filename") or die "Can't open $filename : $!";
-my $file = <FILE>;
-close(FILE);
+my @files = </Users/juliend2/Desktop/Dropbox/perso/ressources/TEMPS/*.txt>;
+foreach my $file (@files) {
+	$file =~ m/([0-9-]+).txt$/;
+	my $date = $1;
+	print "<h2>".$date."</h2>";
+	# get the file :
+	my $filename = '/Users/juliend2/Desktop/Dropbox/perso/ressources/TEMPS/'.$date.'.txt';
+	undef $/;
+	open (FILE,"< $filename") or die "Can't open $filename : $!";
+	my $file = <FILE>;
+	close(FILE);
 
-my ($y, $m, $d, $hh, $mm, $ss) = (localtime)[5,4,3,2,1,0]; $y += 1900; $m++;
-my $iso_now = sprintf("%d-%02d-%02d %02d:%02d:%02d", $y, $m, $d, $hh, $mm, $ss);
+	# split the file :
+	my @blocs = ();
+	my %splittedfile = split(/(\n[-a-z_ ]+\s?:\n[-0-9h\s]+)/,$file); # get all the hour blobs
 
-$timeDiffStr = &timeDiff( date1 => '2009-06-28 15:36', date2 => $iso_now );
-print $timeDiffStr;
+	# VIVE PERL :
+	my @blocs = grep {!/^$/} %splittedfile;
 
-# split the file :
-@blocs = ();
-%splittedfile = split(/(\n[-a-z_ ]+\s?:\n[-0-9h\s]+)/,$file); # get all the hour blobs
-foreach $val (%splittedfile) { # loop into the blobs 
-	# if ($val =~ /([-a-z_ ]+)\s?:/i) { # get the labels
-	# 	print $1.'<br/>';	# print them 
-	# }
-	if ($val !~ /^$/) {
-		push(@blocs,$val);
+	# loop into the blocks :
+	foreach my $bloc (@blocs) {
+		$bloc =~ m/([-a-z ]+)\s?:/i;
+		my $title = $1;
+		my $totalTime = 0;
+		foreach	my $temps (split(/\n/,$bloc)) {
+			# pre($temps);
+			if ($temps =~ /(\d{1,2}h\d{2}) - (\d{1,2}h\d{2})/) {
+				my $debut = $1;
+				my $fin   = $2;
+				$debut =~ s/h/:/; 
+				$fin   =~ s/h/:/;
+				$totalTime += &timeDiff( date1 => '20'.$date.' '.$debut, date2 => '20'.$date.' '.$fin );
+			}
+		}
+		print $title. ' : ';
+		print int($totalTime / 60) . '<br/>';	
 	}
+	
 }
-# pre(@blocs);
-foreach $bloc (@blocs) {
-	pre($bloc);
-}
+
 
 print <<EndFooter;
 </ul>
