@@ -15,7 +15,7 @@ ul {
 	float: right;
 	clear: both;
 	height: 160px;
-	width: 400px;
+	width: 55%;
 	list-style: none;
 }
 	li {
@@ -28,6 +28,6 @@ ul {
 	}
 pre, div#projects {
 	float: left;
-	width: 375px;
+	width: 39%;
 /*	clear: left;*/
 }

@@ -14,7 +14,7 @@ require "./functions.pl"; # fonctions diverses
 print "Content-type:text/html\n\n";
 print <<EndHdr;
 <html>
-<head><title>URL List</title>
+<head><title>Calcul de temps dans mes projets</title>
 <style>
 EndHdr
 # hack to include a css into a perl file :
@@ -27,7 +27,7 @@ print <<EndHdr;
 </style>
 </head>
 <body>
-<h1>Time spent by projects</h1>
+<h1>Calcul de temps dans mes projets</h1>
 <ul>
 EndHdr
 
@@ -88,7 +88,9 @@ foreach my $file (@files) {
 print '</ul>';
 
 print '<div id="projects">';
-while ((my $key, my $value) = each %projects)
+
+my @sortorder = sort keys %projects;
+foreach my $key (@sortorder)
 {
   print "$key : " . int($projects{$key} / 60)." minutes or <strong>". int($projects{$key} / 60 / 60) ." hours</strong><br/>";
 }
