@@ -14,18 +14,23 @@ h2 {
 ul {
 	float: right;
 	clear: both;
-	height: 160px;
 	width: 55%;
 	list-style: none;
 }
 	li {
 		float: left;
-		height: 160px;
-		width: 160px;
+		height: 190px;
+		width: 170px;
 		margin: .5em;
 		padding: .5em;
 		background: #A1CFE9;
+		overflow-y: auto;
 	}
+		li span {
+			border-top: 1px dotted #5C8499;
+			padding: .2em 0;
+			display: block;
+		}
 pre, div#projects {
 	float: left;
 	width: 39%;

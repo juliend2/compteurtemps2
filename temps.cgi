@@ -6,7 +6,7 @@ use Data::Dumper;
 use Time::Simple;
 use Time::Piece;
 use Time::Simple::Range;
-
+use POSIX qw(strftime);
 # require 'local::lib';
 
 require "./functions.pl"; # fonctions diverses
@@ -80,8 +80,13 @@ foreach my $file (@files) {
 		$shorttitle =~ m/^([-a-z]+)/;
 		$shorttitle = $1;
 		$projects{$shorttitle} += $totalTime; # ajouter au hash le titre du projet et son temps
+		print '<span>';
 		print $title. ' : ';
-		print int($totalTime / 60) . '<br/>';	
+		print '<small>';
+		print '<strong><big>'.int($totalTime / 60 / 60).'h'. (int(($totalTime / 60) % 60)<9?'0'.int(($totalTime / 60) % 60):int(($totalTime / 60) % 60)) .'</big></strong><br/>';	
+		print '('.int($totalTime / 60) . 'min.)';
+		print '</small>';
+		print '</span>';
 	}
 	print '</li>';
 }
@@ -95,6 +100,15 @@ foreach my $key (@sortorder)
   print "$key : " . int($projects{$key} / 60)." minutes or <strong>". int($projects{$key} / 60 / 60) ." hours</strong><br/>";
 }
 print '</div>';
+
+# my $date = '2008-08-10';
+# my $fmt = "%A";  # %a = abbreviated weekday %u = weekday number	
+# my $mday = substr($date, 8, 2);
+# my $mon =  substr($date, 5 ,2);
+# my $year = substr($date, 0 ,4);
+# my $weekday =
+#  strftime($fmt, 0, 0, 0, $mday , $mon - 1, $year - 1900, -1, -1, -1);
+# print "$weekday";
 
 # pre(%projects);
 print <<EndFooter;
